@@ -10,7 +10,7 @@ services:
     volumes:
       - ./php-web:/var/www/html
     environment:
-      - NODE_API_URL=http://node_api:3000
+      - NODE_API_URL=http://node_api:5000
     depends_on:
       - node_api
   
