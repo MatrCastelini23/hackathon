@@ -1,0 +1,30 @@
+import "reflect-metadata";
+import { AppDataSource } from "../data-source.js";
+import { UserEntity } from "../../models/UserEntity.js";
+
+async function runSeeds() {
+    await AppDataSource.initialize();
+    const userRepository = AppDataSource.getRepository(UserEntity);
+
+    const emailChecker = "seed@email.com";
+    const checkEmail = await userRepository.exists({ where: { email: emailChecker } });
+    
+    if (!checkEmail){
+        await userRepository.save(
+            userRepository.create({
+                name: "Seed User",
+                email: emailChecker,
+                password: "seedpassword",
+            }),
+        );
+    }
+    
+    await AppDataSource.destroy();
+}
+
+runSeeds().catch(async (error) => {
+    console.error(error);
+    if (AppDataSource.isInitialized) await AppDataSource.destroy();
+
+    process.exit(1);
+});

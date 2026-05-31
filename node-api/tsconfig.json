@@ -7,13 +7,18 @@
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "NodeNext",
-    "target": "esnext",
+    //"module": "NodeNext",
+    //"target": "esnext",
     "types": ["node"],
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
     // and npm install -D @types/node
+    
+    "target": "esnext", // define versão do JavaScript gerado
+    "module": "node16", // formato de import/export segundo regras do Node 16
+    "moduleResolution": "node16", // busca arquivos importados como no Node 16
+    "allowImportingTsExtensions": false, // não permite escrever ".ts" no caminho do import
 
     // Other Outputs
     "sourceMap": true,
@@ -35,10 +40,12 @@
     // Recommended Options
     "strict": true,
     "jsx": "react-jsx",
-    "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+
     "skipLibCheck": true,
 
     "experimentalDecorators": true,

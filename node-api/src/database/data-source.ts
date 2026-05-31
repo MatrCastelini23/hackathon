@@ -1,17 +1,26 @@
 import "reflect-metadata";
 import "dotenv/config";
 import { DataSource } from "typeorm";
-import path from "path";
 import  { UserEntity }  from "../models/UserEntity.js";
 
-const databasePath = path.join(process.cwd(), "database", "app.db");
-const migrationsPath = path.resolve(__dirname, './migrations/*.ts');
+
+const databaseHost = process.env.DATABASE_HOST || "db";
+const databasePort = process.env.DATABASE_PORT || "3306";
+const databaseUsername = process.env.DATABASE_USERNAME || "root";
+const databasePassword = process.env.DATABASE_PASSWORD || "root";
+const databaseName = process.env.DATABASE_NAME || "hackathon";
+
+
 export const AppDataSource = new DataSource({
     type: "mysql",
-    database: databasePath,
-    entities: [UserEntity],
+    host: databaseHost,
+    port: Number(databasePort),
+    username: databaseUsername,
+    password: databasePassword,
+    database: databaseName,
+    driver: "mysql2",
     synchronize: true,
-    logging: false,
-    migrations: [migrationsPath],
+    entities: [UserEntity],
+    //migrations: "src/database/migrations/*.ts",
     migrationsRun: true,
 });
