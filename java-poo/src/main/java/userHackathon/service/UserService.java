@@ -11,13 +11,14 @@ public class UserService {
     public void salvar(User user){
         try{
             var dao = new UserDao();
-            if(user.getId() == null){
+            if(user.getId() == null) {
                 dao.cadastrarUsuario(user);
-            }else {
+            }
+            else {
                 dao.atualizarUsuario(user);
             }
         } catch (Exception e) {
-            System.out.println("Erro no service" + e.getMessage());;
+            System.out.println("Erro no service " + e.getMessage());;
         }
     }
 

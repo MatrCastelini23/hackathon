@@ -15,11 +15,11 @@ public class UserGui extends JFrame implements PainelDefault {
     private JPanel painel = new JPanel(new GridBagLayout());
     private JLabel idLabel = new JLabel("Id");
     private JTextField idField = new JTextField(20);
-    private JLabel nameLabel = new JLabel("Name");
+    private JLabel nameLabel = new JLabel("name");
     private JTextField nameField = new JTextField(20);
-    private JLabel emailLabel = new JLabel("Email");
+    private JLabel emailLabel = new JLabel("email");
     private JTextField emailField = new JTextField(20);
-    private JLabel passwordLabel = new JLabel("Senha");
+    private JLabel passwordLabel = new JLabel("password");
     private JTextField passwordField = new JTextField(20);
     private JButton botaoEnviar = new JButton("Enviar");
     private JButton botaoDeletar = new JButton("Deletar");
@@ -45,7 +45,7 @@ public class UserGui extends JFrame implements PainelDefault {
         painelAdd(painel, passwordField, 1, 3);
 
         painelAdd(painel, botaoEnviar, 0, 4);
-        painelAdd(painel, botaoEnviar, 1, 4);
+        painelAdd(painel, botaoDeletar, 1, 4);
 
         botaoEnviar.addActionListener(this::enviar);
         botaoDeletar.addActionListener(this::deletar);

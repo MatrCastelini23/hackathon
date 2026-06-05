@@ -40,11 +40,11 @@ public class User {
 
     @Override
     public String toString() {
-        return "Usuario {" +
-                "id: " + id + '\''+
-                "nome: " + name +'\''+
-                "email: " + email + '\''+
-                "senha: " + password +
+        return "user {" +
+                "id " + id + '\''+
+                "name " + name +'\''+
+                "email " + email + '\''+
+                "password " + password +
                 "}";
     }
 }

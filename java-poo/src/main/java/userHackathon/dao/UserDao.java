@@ -29,7 +29,7 @@ public class UserDao extends Dao{
     }
 
     public void cadastrarUsuario(User user) throws SQLException{
-        var sqlInsert = "insert into users (name, email, senha) values (?,?,?)";
+        var sqlInsert = "insert into users (name, email, password) values (?,?,?)";
         var ps = getConnection().prepareStatement(sqlInsert);
         ps.setString(1, user.getName());
         ps.setString(2, user.getEmail());
@@ -38,11 +38,12 @@ public class UserDao extends Dao{
     }
 
     public void atualizarUsuario(User user)throws SQLException{
-        var sqlUpdate = "udpate user set nome = ?, email=?, password=? where id=?";
+        var sqlUpdate = "update users set name=?, email=?, password=? where id=? ";
         var ps = getConnection().prepareStatement(sqlUpdate);
         ps.setString(1, user.getName());
         ps.setString(2, user.getEmail());
         ps.setString(3, user.getPassword());
+        ps.setLong(4, user.getId());
         ps.execute();
     }
 
