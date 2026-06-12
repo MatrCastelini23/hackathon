@@ -6,7 +6,7 @@ export class AlunosEntity{
     id!: number;
 
     @Column({type: "varchar",})
-    name!: string;
+    nome!: string;
 
     @Column({type: "varchar",})
     cpf!: string;
