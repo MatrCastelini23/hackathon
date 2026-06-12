@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Empresa - UniALFA</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="cadastro-container">
+        <div class="cadastro-card">
+            <h2>Cadastro de Empresa</h2>
+            
+            <div id="msg-sucesso" style="display: none;" class="msg-alerta-sucesso">
+                Empresa cadastrada com sucesso no sistema local! 🏢✨
+            </div>
+
+            <form id="form-empresa" onsubmit="salvarEmpresaCRUD(event)">
+                <div class="cadastro-group">
+                    <label for="razao">Razão Social</label>
+                    <input type="text" id="razao" required placeholder="Nome jurídico da empresa">
+                </div>
+
+                <div class="cadastro-group">
+                    <label for="fantasia">Nome Fantasia</label>
+                    <input type="text" id="fantasia" required placeholder="Nome comercial da empresa">
+                </div>
+
+                <div class="cadastro-group">
+                    <label for="email_corp">E-mail Corporativo</label>
+                    <input type="email" id="email_corp" required placeholder="contato@empresa.com">
+                </div>
+
+                <div class="cadastro-group">
+                    <label for="cnpj">CNPJ</label>
+                    <input type="text" id="cnpj" required placeholder="00.000.000/0001-00">
+                </div>
+
+                <div class="cadastro-group">
+                    <label for="tel_comercial">Telefone Comercial</label>
+                    <input type="tel" id="tel_comercial" required placeholder="(00) 0000-0000">
+                </div>
+
+                <div class="cadastro-group">
+                    <label for="senha">Criar Senha</label>
+                    <input type="password" id="senha" required placeholder="Crie uma senha corporativa">
+                </div>
+
+                <button type="submit" class="btn-cadastro">Cadastrar Empresa</button>
+            </form>
+
+            <div class="cadastro-links">
+                <a href="LoginEmpresa.html">Voltar para o Login da Empresa</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function salvarEmpresaCRUD(event) {
+        event.preventDefault();
+
+        const novaEmpresa = {
+            razao_social: document.getElementById('razao').value,
+            nome_fantasia: document.getElementById('fantasia').value,
+            email: document.getElementById('email_corp').value,
+            cnpj: document.getElementById('cnpj').value,
+            telefone: document.getElementById('tel_comercial').value,
+            tipo: 'empresa'
+        };
+
+        // Regra de CRUD: Create local
+        localStorage.setItem('crud_empresa_local', JSON.stringify(novaEmpresa));
+
+        document.getElementById('form-empresa').style.display = 'none';
+        document.getElementById('msg-sucesso').style.display = 'block';
+    }
+    </script>
+
+</body>
+</html>
