@@ -24,7 +24,7 @@
         }
 
         public function buscarVagas():array{
-            return $this->request('GET', 'caminho');
+            return $this->request('GET', 'vagas');
         }
     }
 
