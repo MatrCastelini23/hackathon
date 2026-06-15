@@ -1,5 +1,4 @@
 <?php
-    ob_start();
     session_start();
     require_once 'classes/Aluno.php';
 
@@ -7,21 +6,19 @@
         $aluno = new Aluno();
         $res = $aluno->logar($_POST['cpf'],$_POST['senha'], $_POST['email']);
         //var_dump($res);
+        //die();
         //var_dump($aluno->loginSucesso($res));
         if ($aluno->loginSucesso($res)){
             $_SESSION['aluno_cpf'] = $_POST['cpf'];
             $_SESSION['aluno_email'] = $_POST['email'];
-            $_SESSION['logado'] = true;
+            $_SESSION['alunoLogado'] = true;
             //var_dump($_SESSION); 
             header('Location: estagioAluno.php');
         }else{
-            $_SESSION['erro_login'] = 'CPF, email ou senha inválidos.';
-            ob_end_clean();
-            header('Location: login-aluno.php');
+            $mensagem = 'Login inválido. Verifique seus dados e tente novamente.';
+            $tipo_msg = 'erro';
         }
-        exit;
     }
-    ob_end_flush(); 
 
 ?>
 <!DOCTYPE html>
@@ -55,15 +52,16 @@
                     <input type="email" name="email" placeholder="Email" required>
                     
                 </div>
-
+                <?php if(!empty($mensagem)): ?>
+                    <div class="msg-alerta-<?= $tipo_msg ?>">
+                        <?= htmlspecialchars($mensagem) ?>
+                    </div>
+                <?php endif; ?>
                   <button type="submit" class="btn-entrar">Entrar</button>
 
                 <div class="links-uteis">
                     <a href="recuperarSenhaA.php">Esqueceu sua senha?</a><br>
-                    <a href="cadastroAluno.php">Novo cadastro</a>
                 </div>
-
-                
             </form>
         </div>
     </div>

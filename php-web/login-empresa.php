@@ -1,3 +1,23 @@
+<?php
+    session_start();
+    require_once 'classes/Empresa.php';
+  
+    if($_SERVER['REQUEST_METHOD'] === 'POST'){
+        $empresa = new Empresa();
+        $res = $empresa->logar($_POST['cnpj'], $_POST['senha'], $_POST['email']);
+        //var_dump($res);
+        //var_dump($empresa->resHttp($res));
+        if ($empresa->resHttp($res)){
+            $_SESSION['empresa_cnpj'] = $_POST['cnpj'];
+            $_SESSION['empresa_email'] = $_POST['email'];
+            $_SESSION['empresalogada'] = true;
+            header('Location: estagioEmpresa.php');
+        }else{
+           $mensagem = 'Erro ao cadastrar empresa. Verifique os dados e tente novamente.';
+           $tipo_msg = 'erro'; 
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -12,11 +32,11 @@
         <div class="login-card">
             <h2>ESTÁGIO - EMPRESA</h2>
             
-            <form action="processa_login.php" method="POST">
+            <form method="POST">
                 
                 <div class="input-group">
-                    <span class="icon-box user-icon"></span>
-                    <input type="text" name="usuario" placeholder="Usuário" required>
+                    <span class="icon-box CNPJ-icon"></span>
+                    <input type="text" name="cnpj" placeholder="CNPJ" required>
                 </div>
 
                 <div class="input-group">
@@ -25,12 +45,17 @@
                 </div>
 
                 <div class="input-group">
-                    <span class="icon-box CNPJ-icon"></span>
-                    <input type="text" name="cnpj" placeholder="CNPJ" required>
+                    <span class="icon-box email-icon"></span>
+                    <input type="text" name="email" placeholder="email" required>
                 </div>
 
                     <button type="submit" class="btn-entrar">Entrar</button>
 
+                <?php if(!empty($mensagem)): ?>
+                    <div class="msg-alerta-<?= $tipo_msg ?>">
+                        <?= htmlspecialchars($mensagem) ?>
+                    </div>
+                <?php endif; ?>
                 <div class="links-uteis">
                     <a href="recuperarSenhaE.php">Esqueceu sua senha?</a><br>
                     <a href="cadastroEmpresa.php">Criar novo cadastro</a>
