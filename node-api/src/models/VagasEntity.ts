@@ -20,6 +20,8 @@ export class VagasEntity{
     @Column({type: "integer",})
     empresas_id!: number;
 
+    @Column({type: "varchar", length: 200})
+    requisitos_vaga!: string;
 }
 
 export default VagasEntity;
