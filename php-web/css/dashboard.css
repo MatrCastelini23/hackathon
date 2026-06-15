@@ -1,263 +1,369 @@
 /* ==========================================================================
-   DASHBOARD CSS - Baseado no Protótipo de Baixa Fidelidade
+   FONTES OFICIAIS UNIALFA (Montserrat para Títulos, Roboto para Textos)
    ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Roboto:wght@400;500&display=swap');
 
+/* ==========================================================================
+   RESET E ESTILOS GLOBAIS (Premium & Clean)
+   ========================================================================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Roboto', sans-serif;
+    color: #000000; /* Letras pretas por padrão em todo o sistema */
 }
 
-/* Container Principal (Grid) */
+body {
+    background-color: #F8FAFC; 
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Força a tipografia oficial Montserrat em todos os títulos com cor preta absoluta */
+h1, h2, h3, h4, h5, h6, .user-profile, strong, th {
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 700;
+    color: #000000 !important;
+}
+
+/* ==========================================================================
+   ESTRUTURA PRINCIPAL (GRID)
+   ========================================================================== */
 .dashboard-container {
     display: grid;
-    grid-template-columns: 150px 1fr; 
-    grid-template-rows: 60px 1fr;    
+    grid-template-columns: 270px 1fr;
+    grid-template-rows: 75px 1fr;
     grid-template-areas: 
         "header header"
         "sidebar main";
     height: 100vh;
-}
-
-/* --------------------------------------------------------------------------
-   1. BARRA SUPERIOR (HEADER)
-   -------------------------------------------------------------------------- */
-.top-header {
-    grid-area: header;
-    background-color: #ffffff;
-    border-bottom: 1px solid #e0e0e0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-    z-index: 10;
-}
-
-.logo-area { 
-    font-weight: bold; 
-    color: #115c74; 
-    font-size: 1.1rem;
-}
-
-.user-profile {
-    font-size: 0.9rem;
-    color: #333333;
-}
-
-/* --------------------------------------------------------------------------
-   2. MENU LATERAL (SIDEBAR AZUL)
-   -------------------------------------------------------------------------- */
-.sidebar {
-    grid-area: sidebar;
-    background-color: #0084ff; 
-    color: #ffffff;
-    padding: 20px 0;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.05);
-    display: flex;
-    flex-direction: column;
-}
-
-.sidebar ul { 
-    list-style: none; 
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1; 
-}
-
-/* Ajuste nos links para se adaptarem à nova largura */
-.sidebar ul li a {
-    display: block;
-    color: #ffffff;
-    padding: 15px 15px; 
-    text-decoration: none;
-    font-size: 0.9rem;  
-    transition: background 0.3s, padding-left 0.3s;
-}
-
-.sidebar ul li a:hover { 
-    background-color: rgba(255, 255, 255, 0.15);
-    padding-left: 20px; 
-}
-
-/* Empurra o item "Sair" para o rodapé */
-.sidebar ul li.menu-sair {
-    margin-top: auto; 
-    padding-bottom: 15px; 
-}
-
-/* --------------------------------------------------------------------------
-   3. ÁREA DE CONTEÚDO PRINCIPAL (MAIN)
-   -------------------------------------------------------------------------- */
-.main-content {
-    grid-area: main;
-    background-color: #f4f6f9;
-    padding: 25px;
-    overflow-y: auto; /* Cria barra de rolagem se o conteúdo crescer */
-}
-
-/* Banner Principal (Hero Gray) */
-.hero-banner {
-    background-color: #d6d8db; /* O cinza do seu protótipo */
-    border-radius: 6px;
-    padding: 30px;
-    margin-bottom: 25px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-.hero-banner h2 {
-    color: #212529;
-    margin-bottom: 8px;
-    font-size: 1.5rem;
-}
-
-.hero-banner p {
-    color: #495057;
-    font-size: 1rem;
-}
-
-/* 4. Grid de Conteúdo Inferior (Duas Colunas) */
-.content-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr; /* Coluna maior na esquerda, menor na direita */
-    gap: 20px;
-}
-
-.card-box {
-    background-color: #ffffff;
-    border-radius: 6px;
-    padding: 20px;
-    border: 1px solid #e0e0e0;
-    min-height: 250px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-}
-
-.card-box h3 {
-    font-size: 1.1rem;
-    color: #115c74;
-    border-bottom: 2px solid #f4f6f9;
-    padding-bottom: 10px;
-    margin-bottom: 15px;
-}
-
-/* --------------------------------------------------------------------------
-   RESPONSIVIDADE (MOBILE)
-   -------------------------------------------------------------------------- */
-@media (max-width: 768px) {
-    .dashboard-container {
-        grid-template-columns: 1fr;
-        grid-template-areas: 
-            "header" 
-            "main";
-    }
-    .sidebar { 
-        display: none; /* Opcional: esconde o menu lateral em telas de celular */
-    } 
-    .content-grid { 
-        grid-template-columns: 1fr; 
-    }
+    width: 100vw;
 }
 
 /* ==========================================================================
-   COMPONENTES CORPORATIVOS DA EMPRESA (SEM BOOTSTRAP)
+   BARRA SUPERIOR (HEADER) - Alinhamento Perfeito
    ========================================================================== */
-
-/* Gerenciamento de Exibição das Abas */
-.tab-content {
-    display: none;
-}
-.tab-content.active {
-    display: block;
-}
-
-/* Links Ativos na Barra Lateral */
-.sidebar ul li a.active {
-    background-color: rgba(255, 255, 255, 0.2);
-    border-left: 4px solid #ffffff;
-    font-weight: 700;
-}
-
-/* Itens de lista (Vagas da empresa) */
-.item-lista-painel {
-    background: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-    padding: 15px;
-    margin-bottom: 15px;
+.top-header {
+    grid-area: header;
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #E2E8F0;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 40px;
+    z-index: 10;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
-/* Botão de Destaque no Hero Banner */
-.btn-principal {
-    background-color: #0084ff;
-    color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    font-family: 'Montserrat', sans-serif;
+.logo-main {
+    height: 42px;
+    width: auto;
+    display: block;
+}
+
+.user-profile {
+    font-size: 1rem;
     font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.btn-principal:hover {
-    background-color: #0066cc;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-/* Tabelas Administrativas */
+.user-profile::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: #22E836; /* Indicador online */
+    border-radius: 50%;
+}
+
+/* ==========================================================================
+   MENU LATERAL (SIDEBAR UNIALFA) - Idêntico a Portais Oficiais
+   ========================================================================== */
+.sidebar {
+    grid-area: sidebar;
+    background-color: #005EA6; 
+    padding: 25px 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.03);
+}
+
+.sidebar ul {
+    list-style: none;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.sidebar ul li {
+    margin-bottom: 4px;
+    padding: 0 12px;
+}
+
+/* Links da Sidebar - Texto Branco para leitura no fundo azul */
+.sidebar ul li a {
+    display: block;
+    color: #FFFFFF !important; 
+    text-decoration: none;
+    padding: 14px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.25s ease;
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+.sidebar ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding-left: 24px;
+    color: #FFFFFF !important;
+}
+
+.sidebar ul li a.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    font-weight: 700;
+    color: #FFFFFF !important;
+    box-shadow: inset 3px 0 0 #FFFFFF; 
+}
+
+.sidebar ul li.menu-sair {
+    margin-top: auto; 
+    padding-bottom: 20px;
+}
+
+/* ==========================================================================
+   ÁREA CENTRAL (MAIN CONTENT)
+   ========================================================================== */
+.main-content {
+    grid-area: main;
+    padding: 40px;
+    overflow-y: auto;
+    background-color: #F8FAFC;
+}
+
+.main-content::-webkit-scrollbar {
+    width: 8px;
+}
+.main-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+.main-content::-webkit-scrollbar-thumb {
+    background: #CBD5E1;
+    border-radius: 4px;
+}
+
+.hero-banner {
+    background-color: #FFFFFF;
+    border-left: 6px solid #005EA6; 
+    padding: 30px 35px;
+    border-radius: 8px;
+    margin-bottom: 35px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.01), 0 2px 4px -1px rgba(0, 0, 0, 0.01);
+    border-top: 1px solid #E2E8F0;
+    border-right: 1px solid #E2E8F0;
+    border-bottom: 1px solid #E2E8F0;
+}
+
+.hero-banner h2 {
+    font-size: 1.75rem;
+    margin-bottom: 6px;
+    letter-spacing: -0.5px;
+}
+
+.hero-banner p {
+    font-size: 1rem;
+    color: #475569 !important; 
+    line-height: 1.5;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 30px;
+}
+
+.card-box {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); 
+}
+
+.card-box h3 {
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #F1F5F9;
+    padding-bottom: 12px;
+}
+
+.card-box p {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   CARDS DE LISTAGEM DE VAGAS (Estilo Portal de Vagas Premium)
+   ========================================================================== */
+.vaga-card, 
+.item-lista-painel {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    padding: 20px 25px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.01);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.vaga-card:hover, 
+.item-lista-painel:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.vaga-card strong,
+.item-lista-painel strong {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   TABELAS PADRONIZADAS (Estilo Corporativo Limpo)
+   ========================================================================== */
+.tabela-candidaturas,
 .tabela-padrao {
     width: 100%;
-    border-collapse: collapse;
-    background: #ffffff;
-    margin-top: 10px;
-}
-.tabela-padrao th, 
-.tabela-padrao td {
-    border: 1px solid #e0e0e0;
-    padding: 12px;
-    text-align: left;
-    font-size: 0.9rem;
-}
-.tabela-padrao th {
-    background-color: #f4f6f9;
-    color: #115c74;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-/* Botões de Ação dentro das Tabelas */
-.btn-acao-primario {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    font-size: 0.85rem;
+.tabela-candidaturas th,
+.tabela-padrao th {
+    background-color: #F8FAFC;
     font-weight: 600;
-    cursor: pointer;
+    padding: 16px 20px;
+    text-align: left;
+    border-bottom: 2px solid #E2E8F0;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
+
+.tabela-candidaturas td,
+.tabela-padrao td {
+    padding: 16px 20px;
+    border-bottom: 1px solid #F1F5F9;
+    vertical-align: middle;
+    font-size: 1rem;
+}
+
+.tabela-candidaturas tr:last-child td,
+.tabela-padrao tr:last-child td {
+    border-bottom: none; /* Remove a linha do último item para ficar limpo */
+}
+
+.tabela-candidaturas tr:hover,
+.tabela-padrao tr:hover {
+    background-color: #F8FAFC;
+}
+
+/* ==========================================================================
+   BOTÕES DE AÇÃO 
+   ========================================================================== */
+.btn-candidatar,
+.btn-anunciar-vaga,
+.btn-principal,
+.btn-acao-primario {
+    background-color: #22E836; 
+    color: #000000 !important; 
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(34, 232, 54, 0.2);
+}
+
+.btn-candidatar:hover,
+.btn-principal:hover,
+.btn-anunciar-vaga:hover,
+.btn-acao-primario:hover {
+    background-color: #1BC42C;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(34, 232, 54, 0.3);
+}
+
 .btn-acao-secundario {
     background-color: transparent;
-    color: #0084ff;
-    border: 1px solid #0084ff;
-    padding: 5px 11px;
-    border-radius: 4px;
+    color: #005EA6 !important;
+    border: 1.5px solid #005EA6;
+    padding: 11px 22px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    margin-right: 8px;
+    transition: all 0.2s ease;
+}
+
+.btn-acao-secundario:hover {
+    background-color: rgba(0, 94, 166, 0.05);
+}
+
+/* ==========================================================================
+   STATUS BADGES 
+   ========================================================================== */
+.badge {
+    padding: 6px 14px;
+    border-radius: 100px; 
     font-size: 0.85rem;
     font-weight: 600;
-    cursor: pointer;
-    margin-right: 5px;
-}
-.btn-acao-primario:hover { background-color: #218838; }
-.btn-acao-secundario:hover { background-color: rgba(0, 132, 255, 0.05); }
-
-/* Badges / Etiquetas de Status */
-.badge {
-    padding: 5px 10px;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    font-weight: 600;
     display: inline-block;
+    text-align: center;
 }
-.status-aprovado { background-color: #d4edda; color: #155724; }
-.status-analise { background-color: #d1ecf1; color: #0c5460; }
+
+.status-analise { 
+    background-color: #FEF3C7; 
+    color: #D97706 !important; 
+}
+
+.status-aprovado { 
+    background-color: #DCFCE7; 
+    color: #15803D !important; 
+}
+
+.status-recusado { 
+    background-color: #FEE2E2; 
+    color: #B91C1C !important;
+}

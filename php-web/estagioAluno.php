@@ -27,6 +27,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel do Aluno - UniALFA</title>
+    
+    <link rel="stylesheet" href="css/dashboard.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/dashboard.css">
     <script src="js/script.js" defer></script>
 </head>
@@ -119,7 +121,7 @@
                                 <td>Estágio em Banco de Dados</td>
                                 <td>Beta Sistemas S.A.</td>
                                 <td>01/06/2026</td>
-                                <td><span class="badge status-aprovado">Aprovado 🎉</span></td>
+                                <td><span class="badge status-aprovado">Aprovado</span></td>
                             </tr>
                             <tr>
                                 <td>Suporte Técnico Interno</td>
