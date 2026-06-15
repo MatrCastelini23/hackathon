@@ -4,7 +4,7 @@ import { ContratosEntity } from "../models/ContratosEntity";
 import { ContratosRepository } from "../repositories/ContratosRepository";
 import { ContratoService } from "../services/ContratoService";
 import { ContratoController } from "../controllers/ContratoController";
-import { CandidaturaController } from "../controllers/CandidaturaController";
+
 
 const contratoRouter = Router();
 
@@ -14,5 +14,5 @@ const contratoController = new ContratoController(contratoService);
 
 contratoRouter.post("/criarContratos", contratoController.criarContrato);
 contratoRouter.get("/contratos", contratoController.listarContratos);
-
+  
 export default contratoRouter;
