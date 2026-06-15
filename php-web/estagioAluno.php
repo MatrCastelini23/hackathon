@@ -10,9 +10,10 @@
     
     $vagas = [];
 
-    if($respota ['status'] === 200 && isset($resposta['data'])){
-        $vagas = $resposta['data'];
+    if($resposta ['status'] === 200 && isset($resposta['data'])){
+        $vagas = $resposta['data']['vagas'];
     }
+    //var_dump($vagas);
 ?>
 
 <!DOCTYPE html>
@@ -21,8 +22,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel do Aluno - UniALFA</title>
-    
     <link rel="stylesheet" href="css/dashboard.css">
+    <script src="js/script.js" defer></script>
 </head>
 <body>
 
@@ -69,21 +70,20 @@
                     <h3>Vagas Disponíveis para seu Curso</h3>
                     <p style="color: #666; margin-bottom: 20px;">Candidate-se às oportunidades enviando seu perfil diretamente às empresas parceiras.</p>
                     
-                    <?php if(empty($vagas)):?>
+                    <?php if(empty($vagas)): ?>
                         <p>Não há vagas!</p>
-                    <?php else:?>
-                        <?php foreach($vagas as $vaga)?>
+                    <?php else: ?>
+                        <?php foreach($vagas as $vaga): ?>
                             <div class="vaga-card">                                                
                                 <div>
-                                    <strong style="font-size: 1.1rem; color: #115c74;"><?=htmlspecialchars($vaga['cargo'] ?? 'Sem titulo')?></strong>
-                                    <p style="color: #555; margin-top: 5px;">Empresa: <?=$vaga['empresa'] ?? '' ?> 
+                                    <strong style="font-size: 1.1rem; color: #115c74;"><?=htmlspecialchars($vaga['vaga_cargo'] ?? 'Sem titulo')?></strong>
+                                    <p style="color: #555; margin-top: 5px;">Empresa: <?=$vaga['empresa_razao_social'] ?? '' ?> 
                                     | Telefone de contato: <?=$vaga['telefone'] ?? '' ?> 
-                                    | E-mail: <?=$vaga['email'] ?? '' ?> 
-                                    | Data de fechamento: <?=htmlspecialchars($vaga['data_fechamento'] ?? '') ?></p>
+                                    | E-mail: <?=$vaga['empresa_email'] ?? '' ?> </p>
                                 </div>
                                 <button class="btn-candidatar" onclick="alert('Candidatura enviada com sucesso!')">Candidatar-se</button>
                             </div>
-                        <?php endforeach?>
+                        <?php endforeach; ?>
                     <?php endif; ?>  
                 </div>
             </div>
@@ -135,20 +135,5 @@
 
         </main>
     </div>
-
-    <script>
-        function alternarAba(event, idAba) {
-            event.preventDefault();
-            const conteudos = document.querySelectorAll('.tab-content');
-            conteudos.forEach(conteudo => conteudo.classList.remove('active'));
-            
-            const links = document.querySelectorAll('.tab-link');
-            links.forEach(link => link.classList.remove('active'));
-
-            document.getElementById(idAba).classList.add('active');
-            event.currentTarget.classList.add('active');
-        }
-    </script>
-
 </body>
 </html>
