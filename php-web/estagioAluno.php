@@ -1,9 +1,17 @@
 <?php
     session_start();
-    
+    require_once 'classes/Aluno.php';
     if (!isset($_SESSION['alunoLogado']) || $_SESSION['alunoLogado'] !== true){
         header('Location: login-aluno.php');
         exit;
+    }
+    $aluno = new Aluno();
+    $resposta = $aluno->buscarVagas();
+    
+    $vagas = [];
+
+    if($respota ['status'] === 200 && isset($resposta['data'])){
+        $vagas = $resposta['data'];
     }
 ?>
 
@@ -61,21 +69,22 @@
                     <h3>Vagas Disponíveis para seu Curso</h3>
                     <p style="color: #666; margin-bottom: 20px;">Candidate-se às oportunidades enviando seu perfil diretamente às empresas parceiras.</p>
                     
-                    <div class="vaga-card">
-                        <div>
-                            <strong style="font-size: 1.1rem; color: #115c74;">Estágio em Desenvolvimento Web Back-End</strong>
-                            <p style="color: #555; margin-top: 5px;">Empresa: Alfa Tech Soluções | Bolsa: R$ 1.200,00</p>
-                        </div>
-                        <button class="btn-candidatar" onclick="alert('Candidatura enviada com sucesso!')">Candidatar-se</button>
-                    </div>
-
-                    <div class="vaga-card">
-                        <div>
-                            <strong style="font-size: 1.1rem; color: #115c74;">Estágio em Suporte e Infraestrutura</strong>
-                            <p style="color: #555; margin-top: 5px;">Empresa: Geração de Saberes | Bolsa: R$ 1.000,00</p>
-                        </div>
-                        <button class="btn-candidatar" onclick="alert('Candidatura enviada com sucesso!')">Candidatar-se</button>
-                    </div>
+                    <?php if(empty($vagas)):?>
+                        <p>Não há vagas!</p>
+                    <?php else:?>
+                        <?php foreach($vagas as $vaga)?>
+                            <div class="vaga-card">                                                
+                                <div>
+                                    <strong style="font-size: 1.1rem; color: #115c74;"><?=htmlspecialchars($vaga['cargo'] ?? 'Sem titulo')?></strong>
+                                    <p style="color: #555; margin-top: 5px;">Empresa: <?=$vaga['empresa'] ?? '' ?> 
+                                    | Telefone de contato: <?=$vaga['telefone'] ?? '' ?> 
+                                    | E-mail: <?=$vaga['email'] ?? '' ?> 
+                                    | Data de fechamento: <?=htmlspecialchars($vaga['data_fechamento'] ?? '') ?></p>
+                                </div>
+                                <button class="btn-candidatar" onclick="alert('Candidatura enviada com sucesso!')">Candidatar-se</button>
+                            </div>
+                        <?php endforeach?>
+                    <?php endif; ?>  
                 </div>
             </div>
 
