@@ -25,6 +25,45 @@
     if($resposta ['status'] === 200 && isset($resposta['data'])){
         $candidatos = $resposta['data']['candidaturas'];
     }
+
+    // Buscar candidatos das vagas
+    $resposta = $empresa->buscarEstagiarios();
+
+    $estagiarios = [];
+    if($resposta ['status'] === 200 && isset($resposta['data'])){
+        $estagiarios = $resposta['data']['contratos'];
+    }
+
+
+    //cadastrar vagas
+    if($_SERVER['REQUEST_METHOD'] === 'POST'){
+    $hoje = date('Y-m-d');
+    $data_abertura   = date('Y-m-d', strtotime($_POST['data_abertura']));
+    $data_fechamento = date('Y-m-d', strtotime($_POST['data_fechamento']));
+
+    if($data_abertura < $hoje){
+        $mensagem = "A data de abertura não pode ser anterior ao dia atual.";
+        $tipo_msg = "erro";
+    } elseif($data_fechamento < $hoje){
+        $mensagem = "A data de fechamento não pode ser anterior ao dia atual.";
+        $tipo_msg = "erro";
+    } elseif($data_fechamento <= $data_abertura){
+        $mensagem = "A data de fechamento deve ser posterior à data de abertura.";
+        $tipo_msg = "erro";
+    } else {
+        $res = $empresa->cadastrarVagar($_POST['vaga'], $data_abertura, $data_fechamento, $_POST['requisitos']);
+            //var_dump($res);
+            //die();
+        if($empresa->resHttp($res)){
+            $mensagem = "Vaga cadastrada com sucesso!";
+            $tipo_msg = "sucesso";    
+        }else{
+            $mensagem = "Algo deu errado, tente novamente mais tarde.";
+            $tipo_msg = "erro";
+        }
+    }
+}
+
     //var_dump($candidatos);
     //die();
     ob_end_flush();
@@ -156,16 +195,22 @@
                                 <th>Estagiário</th>
                                 <th>Vaga / Cargo</th>
                                 <th>Data de Início</th>
-                                <th>Situação</th>
+                                <th>Data Fim</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Mariana Costa Ramos</td>
-                                <td>Estágio em Banco de Dados</td>
-                                <td>01/02/2026</td>
-                                <td><span class="badge status-analise">Contrato Ativo</span></td>
-                            </tr>
+                            <?php if(empty($candidatos)): ?>
+                                <p>Sem candidatos!</p>
+                            <?php else: ?>
+                                <?php foreach($estagiarios as $estagiario): ?>
+                                    <tr>
+                                        <td><?= $estagiario['nome']?></td>
+                                        <td><?= $estagiario['cargo']?></td>
+                                        <td><?= $estagiario['date_inicio']?></td>
+                                        <td><?= $estagiario['data_fim']?></td>
+                                    </tr> 
+                                <?php endforeach; ?>
+                            <?php endif; ?>   
                         </tbody>
                     </table>
                 </div>
@@ -185,72 +230,43 @@
                         Insira as informações básicas do estágio. Os campos com asterisco (*) são obrigatórios para a publicação.
                     </p>
 
-                    <form action="" method="POST" style="width: 100%;">
-
+                    <form method="POST" style="width: 100%;">
+                        
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
 
                             <div>
                                 <label style="display: block; font-family: 'Montserrat', sans-serif; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem;">
                                     Título da Vaga / Cargo *
                                 </label>
-                                <input type="text" name="titulo_vaga" placeholder="Ex: Estágio em Desenvolvimento Web" required
+                                <input type="text" name="vaga" placeholder="Ex: Estágio em Desenvolvimento Web" required
+                                    style="width: 100%; padding: 12px 14px; border: 1px solid #E2E8F0; border-radius: 6px; font-size: 0.95rem; background-color: #FFFFFF;">
+                            </div>
+
+                           <?php $hoje = date('Y-m-d'); ?>
+                            <div>
+                                <label style="display: block; font-family: 'Montserrat', sans-serif; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem;">
+                                    Data de Abertura *
+                                </label>
+                                <input type="date" name="data_abertura" required min="<?= $hoje ?>"
                                     style="width: 100%; padding: 12px 14px; border: 1px solid #E2E8F0; border-radius: 6px; font-size: 0.95rem; background-color: #FFFFFF;">
                             </div>
 
                             <div>
                                 <label style="display: block; font-family: 'Montserrat', sans-serif; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem;">
-                                    Setor / Área de Atuação *
+                                    Data de Fechamento *
                                 </label>
-                                <input type="text" name="setor_vaga" placeholder="Ex: Tecnologia / TI" required
+                                <input type="date" name="data_fechamento" required min="<?= $hoje ?>"
                                     style="width: 100%; padding: 12px 14px; border: 1px solid #E2E8F0; border-radius: 6px; font-size: 0.95rem; background-color: #FFFFFF;">
-                            </div>
-
-                            <div>
-                                <label style="display: block; font-family: 'Montserrat', sans-serif; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem;">
-                                    Valor da Bolsa-Auxílio (R$) *
-                                </label>
-                                <input type="text" name="bolsa_vaga" placeholder="Ex: 1.200,00" required
-                                    style="width: 100%; padding: 12px 14px; border: 1px solid #E2E8F0; border-radius: 6px; font-size: 0.95rem; background-color: #FFFFFF;">
-                            </div>
-
-                            <div>
-                                <label style="display: block; font-family: 'Montserrat', sans-serif; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem;">
-                                    Carga Horária Semanal *
-                                </label>
-                                <select name="carga_vaga" required style="width: 100%; padding: 12px 14px; border: 1px solid #E2E8F0; border-radius: 6px; font-size: 0.95rem; background-color: #FFFFFF; height: 47px;">
-                                    <option value="">Selecione...</option>
-                                    <option value="20h">20 horas semanais (4h/dia)</option>
-                                    <option value="30h">30 horas horas semanais (6h/dia)</option>
-                                </select>
-                            </div>
-
-                            <div>
-                                <label style="display: block; font-family: 'Montserrat', sans-serif; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem;">
-                                    Período / Horário de Trabalho
-                                </label>
-                                <input type="text" name="horario_vaga" placeholder="Ex: 08:00 às 14:00"
-                                    style="width: 100%; padding: 12px 14px; border: 1px solid #E2E8F0; border-radius: 6px; font-size: 0.95rem; background-color: #FFFFFF;">
-                            </div>
-
-                            <!-- Campo 6: Localidade -->
-                            <div>
-                                <label style="display: block; font-family: 'Montserrat', sans-serif; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem;">
-                                    Modalidade *
-                                </label>
-                                <select name="modalidade_vaga" required style="width: 100%; padding: 12px 14px; border: 1px solid #E2E8F0; border-radius: 6px; font-size: 0.95rem; background-color: #FFFFFF; height: 47px;">
-                                    <option value="Presencial">Presencial</option>
-                                    <option value="Híbrido">Híbrido</option>
-                                    <option value="Home Office">Home Office (Totalmente Remoto)</option>
-                                </select>
                             </div>
 
                         </div>
-
+                        
+                        
                         <div style="margin-bottom: 30px;">
                             <label style="display: block; font-family: 'Montserrat', sans-serif; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem;">
                                 Requisitos e Qualificações Desejadas *
                             </label>
-                            <textarea name="requisitos_vaga" rows="6" required
+                            <textarea name="requisitos" rows="6" required
                                 placeholder="Descreva as competências técnicas e comportamentais esperadas.&#10;Exemplo:&#10;- Conhecimento em lógica de programação e banco de dados.&#10;- Boa comunicação e trabalho em equipe.&#10;- Estar cursando a partir do 2º período."
                                 style="width: 100%; padding: 14px 16px; border: 1px solid #E2E8F0; border-radius: 6px; font-size: 0.95rem; line-height: 1.6; resize: vertical; background-color: #FFFFFF;"></textarea>
                         </div>
@@ -263,8 +279,12 @@
                                 Cancelar
                             </button>
                         </div>
-
                     </form>
+                    <?php if(!empty($mensagem)): ?>
+                        <div class="msg-alerta-<?= $tipo_msg ?>">
+                            <?= htmlspecialchars($mensagem) ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
 

@@ -14,5 +14,5 @@ const contratoController = new ContratoController(contratoService);
 
 contratoRouter.post("/criarContratos", contratoController.criarContrato);
 contratoRouter.get("/contratos", contratoController.listarContratos);
-  
+contratoRouter.get("/contEmpresa/:id", contratoController.listarContratosPorEmpresa);  
 export default contratoRouter;

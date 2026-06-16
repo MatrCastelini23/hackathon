@@ -53,6 +53,21 @@
             ]);
         }
 
+        public function cadastrarVagar($vaga, $data_abertura, $data_fechamento, $requisitos): array {
+            $id = $_SESSION['empresa_id'] ?? $_GET['id'];
+
+            $data_abertura   = date('Y-m-d', strtotime($data_abertura));
+            $data_fechamento = date('Y-m-d', strtotime($data_fechamento));
+
+            return $this->request('POST', 'criarVagas', [
+                "cargo"           => $vaga,
+                "data_abertura"   => $data_abertura,
+                "data_fechamento" => $data_fechamento,
+                "requisitos"      => $requisitos,
+                "empresas_id"     => $id,
+            ]);  
+        }
+
         public function buscarVagas():array{
             $id = $_SESSION['empresa_id'] ?? $_GET['id'];
             return $this->request('GET', "vagasPorEmpresa/$id");
@@ -62,4 +77,11 @@
             $id = $_SESSION['empresa_id'] ?? $_GET['id'];
             return $this->request('GET', "candEmpresa/$id");
         }
+
+        public function buscarEstagiarios():array{
+            $id = $_SESSION['empresa_id'] ?? $_GET['id'];
+            return $this->request('GET', "contEmpresa/$id");
+        }
+
+
     }

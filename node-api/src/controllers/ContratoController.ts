@@ -34,4 +34,14 @@ export class ContratoController{
         }
     }
 
+    listarContratosPorEmpresa = async(req: Request, res: Response, next: NextFunction) =>{
+        const id = Number(req.params.id)
+        try {
+            const contratos = await this.contratoService.listarContratosPorEmpresa(id);
+            res.json({ contratos });
+        } catch (error) {
+            next(error)
+        }
+    }
+
 }
