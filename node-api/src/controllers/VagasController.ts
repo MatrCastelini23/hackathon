@@ -1,24 +1,24 @@
 import type { Request, Response, NextFunction } from 'express';
-import type { VagasService} from '../services/VagasService';
+import type { VagasService } from '../services/VagasService';
 import AppError from '../utils/AppErrors';
 import z from "zod";
 
 
 
-export class VagasController{
-    constructor(private readonly vagasService: VagasService){};
-
+export class VagasController {
+    constructor(private readonly vagasService: VagasService) { };
+    //z.date substituido por z.coerce.date para aceitar a req em JSON
     private schemaVaga = z.object({
         id: z.number().optional(),
-        cargo: z.string({message: "Cargo é obrigatório"}).max(100),
-        vaga_preenchida: z.boolean({message: "Vaga preenchida é obrigatória"}),
-        data_abertura: z.date({message: "Data de abertura é obrigatória"}),
-        data_fechamento: z.date({message: "Data de fechamento é obrigatória"}),
-        empresas_id: z.number({message: "ID da empresa é obrigatório"}),
-        requisitos: z.string({message: "Requisitos são obrigatórios"}).max(200)
+        cargo: z.string({ message: "Cargo é obrigatório" }).max(100),
+        vaga_preenchida: z.boolean().optional().default(false),
+        data_abertura: z.coerce.date({ message: "Data de abertura é obrigatória" }),
+        data_fechamento: z.coerce.date({ message: "Data de fechamento é obrigatória" }),
+        requisitos: z.string({ message: "Requisitos são obrigatórios" }).max(200),
+        empresas_id: z.coerce.number({ message: "ID da empresa é obrigatório" })
     })
-        
-    listarVagas = async(req: Request, res: Response, next: NextFunction) =>{
+
+    listarVagas = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const vagas = await this.vagasService.listarVagasAll();
             res.json({ vagas });
@@ -27,7 +27,7 @@ export class VagasController{
         }
     }
 
-    listarVagasPorEmpresa = async(req: Request, res: Response, next: NextFunction) =>{
+    listarVagasPorEmpresa = async (req: Request, res: Response, next: NextFunction) => {
         const empresa_id = Number(req.params.id);
         try {
             const vagas = await this.vagasService.listarVagasPorEmpresa(empresa_id);
@@ -37,11 +37,11 @@ export class VagasController{
         }
     }
 
-    CriarVagas = async(req: Request, res: Response, next: NextFunction) =>{
+    criarVagas = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const dados = this.schemaVaga.parse(req.body);
             const vagas = await this.vagasService.createVaga(dados);
-            res.status(201).json({message: "Vaga criada com sucesso", vagas});
+            res.status(201).json({ message: "Vaga criada com sucesso", vagas });
         } catch (error) {
             next(error)
         }

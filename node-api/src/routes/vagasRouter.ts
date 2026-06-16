@@ -13,6 +13,6 @@ const vagasController = new VagasController(vagasService);
 
 vagasRouter.get("/vagas", vagasController.listarVagas);
 vagasRouter.get("/vagasPorEmpresa/:id", vagasController.listarVagas);
-vagasRouter.post("/criarVagas", vagasController.CriarVagas);
+vagasRouter.post("/criarVagas", vagasController.criarVagas);
 
 export default vagasRouter;

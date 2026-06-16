@@ -11,7 +11,7 @@ export class CandidaturaController {
         id: z.number().optional(),
         aluno_id: z.number({message: "Aluno ID é obrigatório"}),
         vagas_id: z.number({message: "Vaga ID é obrigatório"}),
-        data_candidatura: z.date({message: "Data da candidatura é obrigatória"}),
+        data_candidatura: z.coerce.date({message: "Data da candidatura é obrigatória"}),
     })
 
     realizarCandidatura = async(req: Request, res: Response, next: NextFunction) =>{
@@ -34,6 +34,22 @@ export class CandidaturaController {
                 throw new AppError(400, "Parametros errados");
             }
             const candidaturas = await this.candidaturaService.listarCandidaturasPorAluno(id);
+            if(!candidaturas){
+                throw new AppError(404, "Nada encontrado")
+            }
+            res.json({candidaturas});
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    listarCandidaturasPorEmpresa = async(req: Request, res: Response, next: NextFunction) => {
+        try {
+            const id = Number(req.params.id);
+            if(!Number.isInteger(id) || id < 1){
+                throw new AppError(400, "Parametros errados");
+            }
+            const candidaturas = await this.candidaturaService.listarCandidaturasPorEmpresa(id);
             if(!candidaturas){
                 throw new AppError(404, "Nada encontrado")
             }
