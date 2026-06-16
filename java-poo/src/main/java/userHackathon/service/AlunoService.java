@@ -1,9 +1,7 @@
 package userHackathon.service;
 
 import userHackathon.dao.AlunoDao;
-import userHackathon.dao.EmpresaDao;
 import userHackathon.model.Aluno;
-import userHackathon.model.Empresa;
 
 import java.io.BufferedReader;
 import java.io.File;
