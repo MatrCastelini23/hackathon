@@ -45,7 +45,7 @@ export class CandidaturaService{
         return candidaturas;
     }
 
-        async listarCandidaturasPorEmpresa(empresa_id: number): Promise<any[]>{
+    async listarCandidaturasPorEmpresa(empresa_id: number): Promise<any[]>{
         const candidaturas = await this.candidaturasRepo.getCandidaturaByEmpresa(empresa_id);
         if(!candidaturas){
             throw new AppError(404, "Sem candidaturas");

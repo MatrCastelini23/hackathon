@@ -23,10 +23,10 @@
 
     $candidatos = [];
     if($resposta ['status'] === 200 && isset($resposta['data'])){
-        $candidatos = $resposta['data']['candidatos'];
+        $candidatos = $resposta['data']['candidaturas'];
     }
-    var_dump($candidatos);
-    die();
+    //var_dump($candidatos);
+    //die();
     ob_end_flush();
 ?>
 
@@ -131,9 +131,9 @@
                             <?php else: ?>
                                 <?php foreach($candidatos as $candidato): ?>
                                     <tr>
-                                        <td><?php $candidato['nome']?></td>
-                                        <td><?php $candidato['curso']?></td>
-                                        <td><?php $candidato['vaga']?></td>
+                                        <td><?= $candidato['nome']?></td>
+                                        <td><?= $candidato['curso']?></td>
+                                        <td><?= $candidato['cargo']?></td>
                                         <td>
                                             <button class="btn-acao-primario" onclick="alert('Aluno Contratado com sucesso!')">Contratar</button>
                                         </td>
