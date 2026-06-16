@@ -5,8 +5,12 @@ import userHackathon.model.Empresa;
 import userHackathon.model.EnderecoAluno;
 import userHackathon.service.AlunoService;
 import userHackathon.service.EmpresaService;
+import userHackathon.service.RelatorioService;
 
 import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.util.List;
 
 public class ActionManager {
     public static void configurarBotaoStatusEmpresa(
@@ -90,6 +94,101 @@ public class ActionManager {
                 JOptionPane.showMessageDialog(null, "Erro ao incluir aluno: " + ex.getMessage(),
                         "Erro", JOptionPane.ERROR_MESSAGE);
                 System.out.println("Error: " + ex.getMessage());
+            }
+        });
+    }
+
+    public static void configurarBotaoImportarAluno(
+            JButton botao,
+            Component componentePai,
+            AlunoService service,
+            Runnable atualizarTela
+    ) {
+        botao.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+            int retorno = fileChooser.showOpenDialog(componentePai);
+
+            if (retorno == JFileChooser.APPROVE_OPTION) {
+                File arquivoSelecionado = fileChooser.getSelectedFile();
+                try {
+                    service.importarTxt(arquivoSelecionado);
+
+                    JOptionPane.showMessageDialog(componentePai, "Alunos importados com sucesso!",
+                            "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+                    // Se a importação der certo, avisa a GUI para recarregar a tabela
+                    if (atualizarTela != null) {
+                        atualizarTela.run();
+                    }
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(componentePai, "Erro ao importar: " + ex.getMessage(),
+                            "Erro", JOptionPane.ERROR_MESSAGE);
+                    System.out.println("Error: " + ex.getMessage());
+                }
+            }
+        });
+    }
+
+    public static void configurarBotaoExportarRelatorioAlunos(
+            JButton botao,
+            Component componentePai,
+            AlunoService alunoService,
+            RelatorioService relatorioService
+    ) {
+        botao.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Salvar Relatório de Alunos");
+            fileChooser.setSelectedFile(new File("relatorio_alunos.txt"));
+
+            int retorno = fileChooser.showSaveDialog(componentePai);
+            if (retorno == JFileChooser.APPROVE_OPTION) {
+                File arquivoDestino = fileChooser.getSelectedFile();
+                try {
+                    // Busca a lista atualizada de alunos vinda do banco
+                    List<Aluno> listaAlunos = alunoService.listar();
+
+                    // Dispara a escrita do arquivo txt
+                    relatorioService.gerarRelatorioAlunos(listaAlunos, arquivoDestino);
+
+                    JOptionPane.showMessageDialog(componentePai, "Relatório exportado com sucesso!",
+                            "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(componentePai, "Erro ao gerar relatório: " + ex.getMessage(),
+                            "Erro", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public static void configurarBotaoExportarRelatorioEmpresas(
+            JButton botao,
+            Component componentePai,
+            EmpresaService empresaService,
+            RelatorioService relatorioService
+    ) {
+        botao.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Salvar Relatório de Empresas");
+            fileChooser.setSelectedFile(new File("relatorio_empresas.txt"));
+
+            int retorno = fileChooser.showSaveDialog(componentePai);
+            if (retorno == JFileChooser.APPROVE_OPTION) {
+                File arquivoDestino = fileChooser.getSelectedFile();
+                try {
+                    // Busca a lista atualizada de alunos vinda do banco
+                    List<Empresa> listaEmpresas = empresaService.listar();
+
+                    // Dispara a escrita do arquivo txt
+                    relatorioService.gerarRelatorioEmpresas(listaEmpresas, arquivoDestino);
+
+                    JOptionPane.showMessageDialog(componentePai, "Relatório exportado com sucesso!",
+                            "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(componentePai, "Erro ao gerar relatório: " + ex.getMessage(),
+                            "Erro", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace();
+                }
             }
         });
     }

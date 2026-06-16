@@ -2,7 +2,7 @@ package userHackathon.model;
 
 public class Aluno {
     private Long id;
-    private String cargo;
+    private String nome;
     private String cpf;
     private String email;
     private String telefone;
@@ -109,4 +109,7 @@ public class Aluno {
     public void setIdEnderecoAluno(Long idEnderecoAluno) {
         this.idEnderecoAluno = idEnderecoAluno;
     }
+
+
+
 }
