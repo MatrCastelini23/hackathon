@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class EnderecoDao extends Dao{
-    public void inserir(EnderecoAluno endereco) throws SQLException{
+    public long inserir(EnderecoAluno endereco) throws SQLException{
         var sqlInsert = "insert into endereco_aluno (logradouro,numLogradouro,bairro,cep,cidade,uf) values (?,?,?,?,?,?)";
         var ps = getConnection().prepareStatement(sqlInsert);
         ps.setString(1,endereco.getLogradouro());
@@ -25,5 +25,6 @@ public class EnderecoDao extends Dao{
         } catch (Exception e) {
             System.out.println("Error" + e.getMessage());
         }
+        return 0;
     }
 }
