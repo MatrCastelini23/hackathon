@@ -115,7 +115,12 @@ Para simular os ambientes de banco de dados, API REST e páginas web para acesso
 ## Repositório remoto original:
 - Este repositório tem duas branchs (main e dev), as atualizações devem ser enviadas via pull request na branch dev. Após revisão, será feito o merge para a branch main e estará disponivel para as forks dos demais alunos sincronizarem. 
 
-# Como utilizar local
+# Como utilizar local:
+
+## Requisitos: 
+- Utilzar as ferramentas de Docker e Docker compose para geração de containers. Assim simulando o que seria uma getão do tráfico entre o as páginas Web (Front-end) com as funcionalidades da APIRest (Back-end) que realiza as operações do CRUD direto ao container do banco de dados.
+
+## Passo a passo:
 
 1. Crie uma fork deste repositório em sua conta do GitHub.
 
@@ -125,7 +130,7 @@ Para simular os ambientes de banco de dados, API REST e páginas web para acesso
 3. Crie um arquivo .env, e cole as variaveis de banco de dados dentro. Siga o .env.exemple
 
 4. Após o clone rode o comando docker compose up --build para construir os containers.
-    - Veja se dentro dos containers estão operando
+    - Veja se dentro dos containers estão operando dentro do DockerDesktop.
 
 5. Acesse a pagina web no enderço localhost:80, o phpmyadmin para visualizar o banco no endereço localhost:8080. 
 
