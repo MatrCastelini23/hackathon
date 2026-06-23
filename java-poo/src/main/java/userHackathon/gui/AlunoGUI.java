@@ -55,7 +55,6 @@ public class AlunoGUI extends JFrame implements PainelDefault{
 
     private JButton btnIncluir = new JButton("Incluir");
     private JButton btnImportar = new JButton("Importar");
-
     private JTable tabela = new JTable();
     private JScrollPane scrollPane;
 

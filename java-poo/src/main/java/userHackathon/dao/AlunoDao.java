@@ -28,7 +28,7 @@ public class AlunoDao extends Dao{
             a.setTelefone(resultSet.getString("telefone"));
             a.setCurso(resultSet.getString("curso"));
             a.setPeriodo(resultSet.getInt("periodo"));
-            a.setDataNascimento(resultSet.getDate("data_nasc"));
+            a.setDataNascimento(resultSet.getString("data_nasc"));
             a.setIdEnderecoAluno(resultSet.getLong("endereco_aluno"));
             a.setRa(resultSet.getInt("ra"));
 
@@ -54,8 +54,7 @@ public class AlunoDao extends Dao{
     }
 
     public void inserir(Aluno aluno) throws SQLException{
-        var sqlInsert = "insert into alunos(nome,cpf,email,ra,senha,telefone,curso,periodo,data_nasc,endereco_aluno) " +
-                "values (?,?,?,?,?,?,?,?,?,?)";
+        var sqlInsert = "insert into alunos(nome,cpf,email,ra,senha,telefone,curso,periodo,data_nasc,endereco_aluno) values (?,?,?,?,?,?,?,?,?,?)";
         var ps = getConnection().prepareStatement(sqlInsert);
         ps.setString(1,aluno.getNome());
         ps.setString(2,aluno.getCpf());
@@ -88,7 +87,7 @@ public class AlunoDao extends Dao{
             ps.setNull(8, java.sql.Types.INTEGER);
         }
 
-        ps.setDate(9, (Date) aluno.getDataNascimento());
+        ps.setString(9, aluno.getDataNascimento());
         ps.setLong(10,aluno.getIdEnderecoAluno());
 
         ps.execute();
@@ -107,7 +106,7 @@ public class AlunoDao extends Dao{
         ps.setString(6,aluno.getTelefone());
         ps.setString(7,aluno.getCurso());
         ps.setInt(8,aluno.getPeriodo());
-        ps.setDate(9, (Date) aluno.getDataNascimento());
+        ps.setString(9, aluno.getDataNascimento());
         ps.setLong(10,aluno.getIdEnderecoAluno());
         ps.setLong(11, aluno.getId());
         ps.execute();

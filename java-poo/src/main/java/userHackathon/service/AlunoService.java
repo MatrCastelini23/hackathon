@@ -69,8 +69,7 @@ public class AlunoService implements Matricula {
                     if(!dados[5].trim().isEmpty()){
                         novo.setPeriodo(Integer.parseInt(dados[5].trim()));
                     }
-                    var date = Date.from(Instant.parse(dados[6].trim()));
-                    novo.setDataNascimento(date);
+                    novo.setDataNascimento(dados[6].trim());
 
                     EnderecoAluno enderecoNovo = new EnderecoAluno();
                     enderecoNovo.setLogradouro(dados[7].trim());

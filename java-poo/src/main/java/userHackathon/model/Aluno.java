@@ -12,7 +12,7 @@ public class Aluno {
     private String telefone;
     private String curso;
     private Integer periodo;
-    private Date dataNascimento;
+    private String dataNascimento;
     private Boolean apto;
     private Long idEnderecoAluno;
     private EnderecoAluno endereco;
@@ -97,11 +97,11 @@ public class Aluno {
         this.periodo = periodo;
     }
 
-    public Date getDataNascimento() {
+    public String getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(Date dataNascimento) {
+    public void setDataNascimento(String dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 
