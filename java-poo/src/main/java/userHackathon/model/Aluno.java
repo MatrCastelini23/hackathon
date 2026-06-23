@@ -1,18 +1,21 @@
 package userHackathon.model;
 
+import java.util.Date;
+
 public class Aluno {
     private Long id;
     private String nome;
     private String cpf;
     private String email;
+    private Integer ra;
+    private String senha;
     private String telefone;
     private String curso;
     private Integer periodo;
-    private String dataNascimento;
+    private Date dataNascimento;
+    private Boolean apto;
     private Long idEnderecoAluno;
     private EnderecoAluno endereco;
-    private Integer ra;
-    private String senha;
 
     public String getSenha() {
         return senha;
@@ -94,11 +97,11 @@ public class Aluno {
         this.periodo = periodo;
     }
 
-    public String getDataNascimento() {
+    public Date getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(String dataNascimento) {
+    public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 

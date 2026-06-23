@@ -59,7 +59,6 @@ public class EnderecoAlunoDao extends Dao{
         var sqlUpdate = "update endereco_aluno set logradouro=?,num_logradouro=?,bairro=?,cep=?,cidade=?,uf=?" +
                 "where id=?";
         var ps = getConnection().prepareStatement(sqlUpdate);
-
         ps.setString(1,endereco.getLogradouro());
         ps.setString(2,endereco.getNumLogradouro());
         ps.setString(3,endereco.getBairro());

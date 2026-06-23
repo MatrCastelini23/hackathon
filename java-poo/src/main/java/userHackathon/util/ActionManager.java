@@ -10,6 +10,8 @@ import userHackathon.service.RelatorioService;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 public class ActionManager {
@@ -73,7 +75,8 @@ public class ActionManager {
                 if (!periodoField.getText().trim().isEmpty()) {
                     aluno.setPeriodo(Integer.parseInt(periodoField.getText().trim()));
                 }
-                aluno.setDataNascimento(dataNascField.getText().trim());
+                var date = Date.from(Instant.parse(dataNascField.getText().trim()));
+                aluno.setDataNascimento(date);
 
                 EnderecoAluno endereco = new EnderecoAluno();
                 endereco.setLogradouro(logradouroField.getText().trim());

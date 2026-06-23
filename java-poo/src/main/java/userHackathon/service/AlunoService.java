@@ -2,16 +2,19 @@ package userHackathon.service;
 
 import userHackathon.dao.AlunoDao;
 import userHackathon.dao.EnderecoAlunoDao;
+import userHackathon.interfac.Matricula;
 import userHackathon.model.Aluno;
 import userHackathon.model.EnderecoAluno;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-public class AlunoService {
+public class AlunoService implements Matricula {
 
     public List<Aluno> listar() {
         try {
@@ -30,17 +33,7 @@ public class AlunoService {
             var enderecoDao = new EnderecoAlunoDao();
 
             if(aluno.getId() == null){
-
-                if (endereco != null){
-
-                    long idEnderecoGerado = enderecoDao.inserir(endereco);
-
-                    endereco.setId(idEnderecoGerado);
-                    aluno.setIdEnderecoAluno(idEnderecoGerado);
-
-                }
-
-                dao.inserir(aluno);
+                Matricula.matricular(aluno, endereco);
             } else {
                 dao.atualizar(aluno);
 
@@ -76,8 +69,8 @@ public class AlunoService {
                     if(!dados[5].trim().isEmpty()){
                         novo.setPeriodo(Integer.parseInt(dados[5].trim()));
                     }
-
-                    novo.setDataNascimento(dados[6].trim());
+                    var date = Date.from(Instant.parse(dados[6].trim()));
+                    novo.setDataNascimento(date);
 
                     EnderecoAluno enderecoNovo = new EnderecoAluno();
                     enderecoNovo.setLogradouro(dados[7].trim());

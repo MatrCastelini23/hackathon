@@ -3,6 +3,7 @@ package userHackathon.dao;
 import userHackathon.model.Aluno;
 import userHackathon.model.EnderecoAluno;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ public class AlunoDao extends Dao{
             a.setTelefone(resultSet.getString("telefone"));
             a.setCurso(resultSet.getString("curso"));
             a.setPeriodo(resultSet.getInt("periodo"));
-            a.setDataNascimento(resultSet.getString("data_nasc"));
+            a.setDataNascimento(resultSet.getDate("data_nasc"));
             a.setIdEnderecoAluno(resultSet.getLong("endereco_aluno"));
             a.setRa(resultSet.getInt("ra"));
 
@@ -87,7 +88,7 @@ public class AlunoDao extends Dao{
             ps.setNull(8, java.sql.Types.INTEGER);
         }
 
-        ps.setString(9,aluno.getDataNascimento());
+        ps.setDate(9, (Date) aluno.getDataNascimento());
         ps.setLong(10,aluno.getIdEnderecoAluno());
 
         ps.execute();
@@ -101,15 +102,14 @@ public class AlunoDao extends Dao{
         ps.setString(1,aluno.getNome());
         ps.setString(2,aluno.getCpf());
         ps.setString(3,aluno.getEmail());
-        ps.setString(4,aluno.getTelefone());
-        ps.setString(5,aluno.getCurso());
-        ps.setInt(6,aluno.getPeriodo());
-        ps.setString(7,aluno.getDataNascimento());
-        ps.setLong(8,aluno.getIdEnderecoAluno());
-        ps.setLong(9, aluno.getId());
-        ps.setInt(10,aluno.getRa());
-        ps.setString(11, aluno.getSenha());
-
+        ps.setInt(4,aluno.getRa());
+        ps.setString(5, aluno.getSenha());
+        ps.setString(6,aluno.getTelefone());
+        ps.setString(7,aluno.getCurso());
+        ps.setInt(8,aluno.getPeriodo());
+        ps.setDate(9, (Date) aluno.getDataNascimento());
+        ps.setLong(10,aluno.getIdEnderecoAluno());
+        ps.setLong(11, aluno.getId());
         ps.execute();
     }
 }

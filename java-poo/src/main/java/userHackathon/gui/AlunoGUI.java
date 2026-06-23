@@ -23,6 +23,7 @@ public class AlunoGUI extends JFrame implements PainelDefault{
     private JTextField nomeField = new JTextField();
     private JTextField cpfField = new JTextField();
     private JTextField emailField = new JTextField();
+    private JTextField raField = new JTextField();
     private JTextField telefoneField = new JTextField();
     private JTextField cursoField = new JTextField();
     private JTextField periodoField = new JTextField();
@@ -34,7 +35,6 @@ public class AlunoGUI extends JFrame implements PainelDefault{
     private JTextField cepField = new JTextField();
     private JTextField cidadeField = new JTextField();
     private JTextField ufField = new JTextField();
-    private JTextField raField = new JTextField();
 
     private JLabel idLabel = new JLabel("ID");
     private JLabel nomeLabel = new JLabel("Nome");
@@ -90,6 +90,9 @@ public class AlunoGUI extends JFrame implements PainelDefault{
         emailLabel.setBounds(30,305,100,20);
         emailField.setBounds(30,325,170,30);
 
+        raLabel.setBounds(560,240,50,20);
+        raField.setBounds(560,260,50,30);
+
         telefoneLabel.setBounds(220,305,150,20);
         telefoneField.setBounds(220,325,100,30);
 
@@ -101,9 +104,6 @@ public class AlunoGUI extends JFrame implements PainelDefault{
 
         dataNascimentoLabel.setBounds(440,240,100,20);
         dataNascimentoField.setBounds(440,260,100,30);
-
-        raLabel.setBounds(560,240,50,20);
-        raField.setBounds(560,260,50,30);
 
         idEnderecoAlunoLabel.setBounds(30,370,50,20);
         idEnderecoAlunoField.setBounds(30,390,30,30);
@@ -197,7 +197,7 @@ public class AlunoGUI extends JFrame implements PainelDefault{
             telefoneField.setText(aluno.getTelefone());
             cursoField.setText(aluno.getCurso());
             periodoField.setText(aluno.getPeriodo().toString());
-            dataNascimentoField.setText(aluno.getDataNascimento());
+            dataNascimentoField.setText(aluno.getDataNascimento().toString());
             idEnderecoAlunoField.setText(aluno.getIdEnderecoAluno().toString());
 
             if (aluno.getEndereco() != null) {
